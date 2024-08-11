@@ -50,10 +50,23 @@ class UserView(APIView):
             raise AuthenticationFailed('Unauthenticated!')
 
         try:
-            payload = jwt.decode(token, 'secret', algorithm=['HS256'])
+            # Pass the algorithms argument correctly
+            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
 
         user = CustomUser.objects.filter(id=payload['id']).first()
+        if user is None:
+            raise AuthenticationFailed('User not found!')
+
         serializer = UserSerializer(user)
         return Response(serializer.data)
+    
+class LogoutView(APIView):
+    def post(self, request):
+        response = Response()
+        response.delete_cookie('jwt')
+        response.data = {
+            'message': 'success'
+        }
+        return response
