@@ -1,1 +1,32 @@
-migrations/
+migrations/# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+db.sqlite3
+/media
+
+# Environment variables
+.env
+
+# MySQL dump files
+*.sql
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# System files
+.DS_Store
+.thumbs.db
