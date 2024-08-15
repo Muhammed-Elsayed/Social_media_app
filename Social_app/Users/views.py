@@ -42,7 +42,10 @@ class LoginView(APIView):
        return response
     
 class UserView(APIView):
-
+    """
+        gets the data of the client after verifying the token, 
+        when the client sends a token to the server
+    """
     def get(self, request):
         token = request.COOKIES.get('jwt')
 
@@ -50,7 +53,6 @@ class UserView(APIView):
             raise AuthenticationFailed('Unauthenticated!')
 
         try:
-            # Pass the algorithms argument correctly
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
