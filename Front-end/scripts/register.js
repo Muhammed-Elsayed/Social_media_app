@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault(); // Prevent the default form submission
 
         // Get form data
-        const first_name = document.getElementById('firstName').value;
+        const first_name = document.getElementById('firstName').value.trim();
         const username = document.getElementById('userName').value.trim();
         const last_name = document.getElementById('lastName').value.trim();
         const email = document.getElementById('email').value.trim();
