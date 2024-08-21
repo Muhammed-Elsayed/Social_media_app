@@ -8,7 +8,6 @@ CustomUser = get_user_model()
 class Like(models.Model):
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='likes')
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
-    created_at = models.DateTimeField(auto_now_add=True)
 
 class Comment(models.Model):
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='comments')
