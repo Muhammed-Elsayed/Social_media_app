@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Users',
-    'Follow',
+    'Follows',
+    'Post',
+    'interactions',
     'corsheaders',
     'rest_framework',
 ]
@@ -75,6 +77,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Social_app.wsgi.application'
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'Users.auth.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 
 DATABASES = {

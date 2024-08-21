@@ -1,19 +1,23 @@
-from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import get_authorization_header
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.views import APIView
 from .serializers import UserSerializer
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
 from .models import CustomUser
 import jwt, datetime
+from rest_framework.permissions import AllowAny
 
 class RegisterView(APIView):
-  def post(self, request):
-    serializer = UserSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data)
+   permission_classes = [AllowAny]
+   def post(self, request):
+     serializer = UserSerializer(data=request.data)
+     serializer.is_valid(raise_exception=True)
+     serializer.save()
+     return Response(serializer.data)
   
 class LoginView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
        email = request.data['email']
        password = request.data['password']
@@ -40,29 +44,10 @@ class LoginView(APIView):
           'jwt':token
        }
        return response
-    
-class UserView(APIView):
-    """
-        gets the data of the client after verifying the token, 
-        when the client sends a token to the server
-    """
-    def get(self, request):
-        token = request.COOKIES.get('jwt')
 
-        if not token:
-            raise AuthenticationFailed('Unauthenticated!')
 
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated!')
 
-        user = CustomUser.objects.filter(id=payload['id']).first()
-        if user is None:
-            raise AuthenticationFailed('User not found!')
 
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
     
 class LogoutView(APIView):
     def post(self, request):
