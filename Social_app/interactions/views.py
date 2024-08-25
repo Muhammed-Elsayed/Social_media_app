@@ -10,16 +10,9 @@ class LikeView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        
-        # Initialize the serializer with the request data
         serializer = self.get_serializer(data=request.data)
-        
-        # Validate the serializer
         serializer.is_valid(raise_exception=True)
-        
-        # Save the like
         serializer.save()
-        
         return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
     
 

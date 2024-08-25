@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    background-color: #777;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 100;
+}
+
+.follow-page {
+    display: none;
+    padding: 20px;
+}
+
+.follow-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.person-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    width: 200px;
+}
+
+.person-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.person-info h3 {
+    margin: 10px 0 5px;
+}
+
+.home-page {
+    padding: 20px;
+}
+
+.create-post {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.create-post textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.post img {
+    max-width: 100%;
+    margin: 10px 0;
+}
+
+.comments-section {
+    margin-top: 10px;
+}
+
+.likeBtn, .commentBtn, .followBtn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.likeBtn:hover, .commentBtn:hover, .followBtn:hover {
+    background-color: #0056b3;
+}

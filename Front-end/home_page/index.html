@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <button id="logoutBtn">Logout</button>
+        <button id="followBtn">Follow</button>
+        <button id="notificationBtn">Notifications</button>
+        <div id="notifications" class="dropdown">
+            <!-- Notifications will be dynamically loaded here -->
+        </div>
+    </nav>
+
+    <!-- Follow Page (Hidden by default) -->
+    <div id="followPage" class="follow-page">
+        <!-- Grid or Flexbox container for people to follow -->
+        <div class="follow-container">
+            <!-- Example person to follow -->
+            <div class="person-card">
+                <!-- <img src="profile-pic.jpg" alt="Profile Picture"> -->
+                <div class="person-info">
+                    <h3>John Doe</h3>
+                    <p>Bio goes here...</p>
+                    <button class="followBtn">Follow</button>
+                </div>
+            </div>
+            <div class="person-card">
+                <!-- <img src="profile-pic.jpg" alt="Profile Picture"> -->
+                <div class="person-info">
+                    <h3>John Doe</h3>
+                    <p>Bio goes here...</p>
+                    <button class="followBtn">Follow</button>
+                </div>
+            </div>
+            <!-- Add more person-cards here -->
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div class="home-page">
+        <!-- Create Post -->
+        <div class="create-post">
+            <textarea id="postContent" placeholder="What's on your mind?"></textarea>
+            <input type="file" id="postImage">
+            <button id="postBtn">Post</button>
+        </div>
+
+        <!-- Posts Section -->
+        <div id="postsContainer" class="posts-container">
+            <!-- Example post -->
+            <div class="post">
+                <h4>Jane Smith</h4>
+                <p>This is an example post.</p>
+                <!-- <img src="example-image.jpg" alt="Post Image"> -->
+                <button class="likeBtn">Like</button>
+                <button class="commentBtn">Comment</button>
+                <div class="comments-section">
+                    <!-- Comments will be dynamically loaded here -->
+                     <p>this is a comment</p>
+                </div>
+            </div>
+            <!-- Add more posts here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="Canfollow.js"></script>
+</body>
+</html>

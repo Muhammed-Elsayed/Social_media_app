@@ -2,7 +2,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserSerializer,canFollowSerializer
 from rest_framework.response import Response
 from .models import CustomUser
 import jwt, datetime
@@ -36,19 +36,15 @@ class LoginView(APIView):
           'iat' : datetime.datetime.now(datetime.timezone.utc)
        } 
        token = jwt.encode(payload, 'secret', algorithm='HS256')
-
+       print(token)
        response = Response()
 
-       response.set_cookie(key='jwt',value=token, httponly=True)
+       response.set_cookie(key='jwt',value=token)
        response.data={
           'jwt':token
        }
        return response
 
-
-
-
-    
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
@@ -57,3 +53,9 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response
+    
+class UsersCanFollowView(APIView):
+    def get(self, request):
+        users = CustomUser.objects.exclude(id=request.user.id)
+        serializer = canFollowSerializer(users, many=True)
+        return Response(serializer.data)

@@ -21,3 +21,13 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+
+class canFollowSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    bio = serializers.CharField()
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'bio']

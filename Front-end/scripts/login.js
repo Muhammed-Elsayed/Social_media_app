@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Send the data to the server
           const response = await fetch('http://127.0.0.1:8000/api/login', {
               method: 'POST',
+              credentials: 'include',
               headers: {
                   'Content-Type': 'application/json'
               },
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
               const result = await response.json();
               console.log('Login successful:', result);
               // Optionally redirect to another page or update the UI
-              window.location.href = ''; // Redirect after successful login
+              window.location.href = 'home_page/index.html'; // Redirect after successful login
           } else {
               console.error('Login failed:', response.status, await response.text());
               alert('Login failed. Please check your email/phone number and password.');
