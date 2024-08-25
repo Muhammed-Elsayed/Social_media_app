@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'interactions',
     'corsheaders',
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
