@@ -21,9 +21,10 @@ class CreatePost(APIView):
             return Response(PostSerializer(post).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk):
+    def delete(self, request):
+        post_id = request.data.get('post_id')
         try:
-            post = Post.objects.get(pk=pk)
+            post = Post.objects.get(id=post_id)
         except Post.DoesNotExist:
             return Response({'detail': 'The post didnot exist'}, status=status.HTTP_404_NOT_FOUND)
         
