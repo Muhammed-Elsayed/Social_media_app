@@ -63,7 +63,6 @@ class LoginView(APIView):
           'iat' : datetime.datetime.now(datetime.timezone.utc)
        } 
        token = jwt.encode(payload, 'secret', algorithm='HS256')
-       print(token)
        response = Response()
 
        response.set_cookie(key='jwt',value=token)

@@ -17,7 +17,6 @@ class FollowView(APIView):
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the follower'),
                 'followed_user': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the user to follow'),
             },
             required=['username', 'followed_user']
@@ -30,7 +29,7 @@ class FollowView(APIView):
         operation_description="Follow a user by providing the follower's username and the followed user's username.",
     )
     def post(self, request):
-        follower = request.data.get('username')
+        follower = request.user
         if not follower :
             return Response({"error": "your username is required."}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -57,7 +56,6 @@ class FollowView(APIView):
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the follower'),
                 'followed_user': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the user to unfollow'),
             },
             required=['username', 'followed_user']
@@ -70,7 +68,7 @@ class FollowView(APIView):
         operation_description="Unfollow a user by providing the follower's username and the followed user's username.",
     )
     def delete(self, request):
-        follower = request.data.get('username')
+        follower = request.user
         if not follower:
             return Response({"error": "Your username is required."}, status=status.HTTP_400_BAD_REQUEST)
         

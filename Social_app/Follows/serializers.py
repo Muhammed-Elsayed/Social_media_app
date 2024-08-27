@@ -4,4 +4,4 @@ from .models import Follow
 class FollowSerializer(serializers.ModelSerializer):
       class Meta:
           model = Follow
-          fields = ['username', 'followed_user']
+          fields = [ 'followed_user']
