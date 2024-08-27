@@ -6,9 +6,22 @@ from .serializers import LikeSerializer, CommentSerializer, GetcommentSerializer
 from .models import Like, Comment
 from Post.models import Post
 from Users.models import CustomUser
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class LikeView(APIView):
     permission_classes = [IsAuthenticated]
+
+    @swagger_auto_schema(
+        tags=["Like"],
+        request_body=LikeSerializer,
+        responses={
+            201: openapi.Response(description="Post liked successfully"),
+            404: openapi.Response(description="Post not found or already liked"),
+        },
+        operation_description="Like a post by providing the post ID.",
+    )
+
     def post(self, request):
         data = request.data
         serializer = LikeSerializer(data=data)
@@ -28,6 +41,22 @@ class LikeView(APIView):
             serializer.save(post_id=post, user_id=user)
             return Response({"Detail":"Post liked successfully"}, status=status.HTTP_201_CREATED)
 
+    @swagger_auto_schema(
+        tags=["Like"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'post_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID of the post to unlike'),
+            },
+            required=['post_id']
+        ),
+        responses={
+            204: openapi.Response(description="Post unliked successfully"),
+            404: openapi.Response(description="Post or like not found"),
+            400: openapi.Response(description="Invalid data or action"),
+        },
+        operation_description="Unlike a post by providing the post ID.",
+    )
 
     def delete(self, request):
         post_id = request.data.get('post_id')  
@@ -52,6 +81,16 @@ class LikeView(APIView):
 
 class CreateComment(APIView):
     permission_classes =[IsAuthenticated]
+    @swagger_auto_schema(
+        tags=["Comment"],
+        request_body=CommentSerializer,
+        responses={
+            201: openapi.Response(description="Comment created successfully"),
+            404: openapi.Response(description="Post not found"),
+            400: openapi.Response(description="Invalid data or action"),
+        },
+        operation_description="Create a comment on a post.",
+    )
     def post(self, request):
         user = request.user
         post_id = request.data.get('post_id')
@@ -71,7 +110,16 @@ class CreateComment(APIView):
         serializer = CommentSerializer(comment)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-
+    @swagger_auto_schema(
+        tags=["Comment"],
+        request_body=CommentSerializer,
+        responses={
+            200: openapi.Response(description="Comment updated successfully"),
+            404: openapi.Response(description="Comment or post not found"),
+            400: openapi.Response(description="Invalid data or action"),
+        },
+        operation_description="Update a comment on a post.",
+    )
     def put(self, request):
         user = request.user
         comment_id= request.data.get('comment_id')
@@ -88,7 +136,21 @@ class CreateComment(APIView):
         serializer = CommentSerializer(comment)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    
+    @swagger_auto_schema(
+        tags=["Comment"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'post_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID of the post'),
+            },
+            required=['post_id']
+        ),
+        responses={
+            200: openapi.Response(description="Comments retrieved successfully"),
+            404: openapi.Response(description="Post not found"),
+        },
+        operation_description="Retrieve all comments for a specific post.",
+    )
     def get(self, request):
         post_id = request.data.get('post_id')
 
@@ -100,6 +162,24 @@ class CreateComment(APIView):
         all_comments = Comment.objects.filter(post_id=post)
         serializer = GetcommentSerializer(all_comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK )
+    
+    @swagger_auto_schema(
+        tags=["Comment"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'post_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID of the post'),
+                'comment_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID of the comment to delete'),
+            },
+            required=['post_id', 'comment_id']
+        ),
+        responses={
+            204: openapi.Response(description="Comment deleted successfully"),
+            404: openapi.Response(description="Comment or post not found"),
+            400: openapi.Response(description="Invalid data or action"),
+        },
+        operation_description="Delete a comment from a post.",
+    )
     
     def delete(self, request):
         post_id = request.data.get('post_id')
