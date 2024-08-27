@@ -138,13 +138,15 @@ class CreateComment(APIView):
     
     @swagger_auto_schema(
         tags=["Comment"],
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            properties={
-                'post_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='ID of the post'),
-            },
-            required=['post_id']
-        ),
+        manual_parameters=[
+            openapi.Parameter(
+                'post_id',
+                openapi.IN_QUERY,
+                description='ID of the post',
+                type=openapi.TYPE_INTEGER,
+                required=True
+            )
+        ],
         responses={
             200: openapi.Response(description="Comments retrieved successfully"),
             404: openapi.Response(description="Post not found"),
