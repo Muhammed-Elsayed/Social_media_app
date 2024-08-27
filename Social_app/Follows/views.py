@@ -5,12 +5,30 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model 
 from rest_framework.views import APIView
 from .models import Follow
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 CustomUser = get_user_model()
 
 class FollowView(APIView):
     permission_classes = [IsAuthenticated]
-
+    @swagger_auto_schema(
+        tags=["Follow"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the follower'),
+                'followed_user': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the user to follow'),
+            },
+            required=['username', 'followed_user']
+        ),
+        responses={
+            201: openapi.Response(description="Successfully followed the user"),
+            200: openapi.Response(description="User is already followed"),
+            400: openapi.Response(description="Invalid data or action"),
+        },
+        operation_description="Follow a user by providing the follower's username and the followed user's username.",
+    )
     def post(self, request):
         follower = request.data.get('username')
         if not follower :
@@ -34,7 +52,23 @@ class FollowView(APIView):
 
 
 
-
+    @swagger_auto_schema(
+        tags=["Follow"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the follower'),
+                'followed_user': openapi.Schema(type=openapi.TYPE_STRING, description='Username of the user to unfollow'),
+            },
+            required=['username', 'followed_user']
+        ),
+        responses={
+            200: openapi.Response(description="Successfully unfollowed the user"),
+            400: openapi.Response(description="Invalid data or action"),
+            404: openapi.Response(description="User or follow relationship not found"),
+        },
+        operation_description="Unfollow a user by providing the follower's username and the followed user's username.",
+    )
     def delete(self, request):
         follower = request.data.get('username')
         if not follower:
