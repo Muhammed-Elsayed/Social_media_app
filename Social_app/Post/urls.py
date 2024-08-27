@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import CreatePost, DeletePost , PostListView
+from .views import CreatePost, PostListView
 
 urlpatterns = [
-    path('createpost', CreatePost.as_view(), name='follow'),
-    path('deletepost/<int:pk>', DeletePost.as_view(), name='post-delete'),
+    path('post', CreatePost.as_view(), name='follow'),
     path('getallposts', PostListView().as_view())
 ]

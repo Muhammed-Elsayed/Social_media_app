@@ -21,8 +21,6 @@ class CreatePost(APIView):
             return Response(PostSerializer(post).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class DeletePost(APIView):
-    permission_classes = [IsAuthenticated]
     def delete(self, request, pk):
         try:
             post = Post.objects.get(pk=pk)

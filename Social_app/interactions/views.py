@@ -29,10 +29,6 @@ class LikeView(APIView):
             return Response({"Detail":"Post liked successfully"}, status=status.HTTP_201_CREATED)
 
 
-class UnlikeView(APIView):
-    serializer_class = LikeSerializer
-    permission_classes = [IsAuthenticated]
-
     def delete(self, request):
         post_id = request.data.get('post_id')  
         user = request.user

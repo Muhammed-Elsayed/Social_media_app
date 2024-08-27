@@ -33,10 +33,9 @@ class FollowView(APIView):
             return Response({"message": "You are already following this user."}, status=status.HTTP_200_OK)
 
 
-class UnfollowView(APIView):
-    permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+
+    def delete(self, request):
         follower = request.data.get('username')
         if not follower:
             return Response({"error": "Your username is required."}, status=status.HTTP_400_BAD_REQUEST)

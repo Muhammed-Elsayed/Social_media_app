@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from .models import CustomUser
 import jwt, datetime
 from rest_framework.permissions import AllowAny
+from rest_framework import status
+
 
 class RegisterView(APIView):
    permission_classes = [AllowAny]
@@ -14,7 +16,7 @@ class RegisterView(APIView):
      serializer = UserSerializer(data=request.data)
      serializer.is_valid(raise_exception=True)
      serializer.save()
-     return Response(serializer.data)
+     return Response({"detai" : "registered successfully" }, status=status.HTTP_201_CREATED)
   
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -50,7 +52,7 @@ class LogoutView(APIView):
         response = Response()
         response.delete_cookie('jwt')
         response.data = {
-            'message': 'success'
+            'message': 'success logout'
         }
         return response
     
