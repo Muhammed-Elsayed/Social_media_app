@@ -30,7 +30,7 @@ class CreatePost(APIView):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             post=serializer.save(user_id=request.user)
-            return Response(PostSerializer(post).data, status=status.HTTP_201_CREATED)
+            return Response({"details":"Post created successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     @swagger_auto_schema(
