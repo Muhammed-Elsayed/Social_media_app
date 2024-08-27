@@ -36,13 +36,17 @@ This is a social media platform built with Django and Django REST Framework (DRF
    git clone https://github.com/Muhammed-Elsayed/Social_media_app
    cd social-media-platform
 
-
+2. **make virtual environment**
+   ```bash
   python3 -m venv venv
   source venv/bin/activate
+  
+3. **install requirments**
+   ```bash
 
   pip install -r requirements.txt
 
-  Update the DATABASES setting in settings.py with your MySQL credentials.
+4. **Update the DATABASES setting in settings.py with your MySQL credentials.**
 
   
   DATABASES = {
@@ -55,6 +59,9 @@ This is a social media platform built with Django and Django REST Framework (DRF
         'PORT': '3306',
     }
 }
+
+4.**migrate and runserver**
+   ```bash
   python3 manage.py migrate
   python manage.py runserver
 
